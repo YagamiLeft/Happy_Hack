@@ -5,19 +5,26 @@
   "projectType": "application",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "nx:run-commands",
       "options": {
-        "cypressConfig": "apps/front-e2e/cypress.config.ts",
-        "devServerTarget": "front:serve:development",
-        "testingType": "e2e"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "front:serve:production"
-        },
-        "ci": {
-          "devServerTarget": "front:serve-static"
-        }
+        "commands": ["playwright test"],
+        "cwd": "apps/front-e2e"
+      }
+    },
+    "e2e-debug": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "PWDEBUG=1 playwright test --project=chromium --timeout=0"
+        ],
+        "cwd": "apps/front-e2e"
+      }
+    },
+    "show-e2e-report": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["playwright show-report"],
+        "cwd": "apps/front-e2e"
       }
     },
     "lint": {
